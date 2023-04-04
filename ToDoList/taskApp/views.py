@@ -12,10 +12,11 @@ def home(request):
         form = TaskForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "New Task Create Successfully")
             return redirect('home')
 
     context={
-        'tasks': tasks,
+        'task': tasks,
         'form': form,
     }
     return render(request, 'index.html', context)
@@ -29,6 +30,7 @@ def update(request,id):
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
+            messages.success(request, "Your Task Has Been Updated")
             return redirect('home')
         else:
             messages.error(request, "Please INPUT DATA")
@@ -45,8 +47,15 @@ def delete(request,id):
     task = Task.objects.get(id=id)
     if request.method=='POST':
         task.delete()
+        messages.success(request, "Your Task Has Been Delete!")
         return redirect('home')
     context={
         'task': task,
     }
     return render(request, 'delete.html', context)
+
+def forcedelete(request):
+    task = Task.objects.get(id=id)
+    task.delete()
+    messages.success(request, "Your Task Has Been Delete!")
+    return redirect('home')

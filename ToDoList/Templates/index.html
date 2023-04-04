@@ -1,11 +1,26 @@
 {% extends "base.html" %} {% block title %} TASK-HOMEPAGE {% endblock title %}
 
-{% block heading %} All Tasks {% endblock heading %}
+{% block heading %} <a href="{% url 'home' %}"> All Tasks </a>{% endblock heading %}
 
 
 {% block body %}
 
 <div class="contaner">
+    <div class="row">
+        <div class="col-md-12">
+            {% if messages %}
+            <ul class="messages list-group">
+                {% for message in messages %}
+                <div class="alert alert-warning" role="alert">
+                    <center>                        
+                        <strong>{{message}} . Thanks !!!</strong>
+                    </center>
+                </div>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-4 ">
             <div class="card card-body h-100">
@@ -14,7 +29,7 @@
                 <form method="POST">
                     {% csrf_token %}
                     {{form.title}} <br> <br>
-                    <a name="" id="" class="btn btn-primary" href="#" role="button"> Create Task</a>
+                    <button type="submit" class="btn btn-primary">Create Task</button>
                 </form>
             </div>
         </div>
@@ -31,7 +46,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for task in tasks %}
+                        {% for task in task %}
                         <tr>
                             <td scope="row">{{forloop.counter}}</td>
                             {% if task.complete == True %}
