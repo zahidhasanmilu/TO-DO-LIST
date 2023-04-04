@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block title %} TASK-HOMEPAGE {% endblock title %}
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %} TASK-HOMEPAGE {% endblock title %}
 
 {% block heading %} <a href="{% url 'home' %}"> All Tasks </a>{% endblock heading %}
 
@@ -6,13 +8,16 @@
 {% block body %}
 
 <div class="contaner">
+    <!--  -->
+
+    <!-- ############### -->
     <div class="row">
         <div class="col-md-12">
             {% if messages %}
             <ul class="messages list-group">
                 {% for message in messages %}
                 <div class="alert alert-warning" role="alert">
-                    <center>                        
+                    <center>
                         <strong>{{message}} . Thanks !!!</strong>
                     </center>
                 </div>
@@ -28,8 +33,9 @@
                 <hr>
                 <form method="POST">
                     {% csrf_token %}
-                    {{form.title}} <br> <br>
-                    <button type="submit" class="btn btn-primary">Create Task</button>
+                    {{form|crispy }}
+
+                    <button type="submit" class="btn btn-info">Create Task</button>
                 </form>
             </div>
         </div>
@@ -43,6 +49,8 @@
                             <th>Task</th>
                             <th>Update</th>
                             <th>Delete</th>
+                            <th>Created At</th>
+                         
                         </tr>
                     </thead>
                     <tbody>
@@ -51,18 +59,54 @@
                             <td scope="row">{{forloop.counter}}</td>
                             {% if task.complete == True %}
                             <td><strike>
-                                    <h5> {{task.title}}</h5>
+                                    <h6> {{task.title}}</h6>
                                 </strike></td>
                             {% else %}
                             <td><span>
-                                    <h5>{{task.title}}</h5>
+                                    <h6>{{task.title}}</h6>
                                 </span></td>
                             {% endif %}
 
+
                             <td><a href="{% url 'updateTask' task.id %}"><button type="button"
-                                        class="btn btn-warning">Update</button></a></td>
-                            <td><a href="{% url 'deleteTask' task.id %}"><button type="button"
-                                        class="btn btn-danger">Delete</button></a></td>
+                                        class="btn btn-info">Update</button></a></td>
+                            <td><!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                    data-target="#exampleModal_{{ task.id }}">
+                                    Delete
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal_{{ task.id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="{% url 'forcedelete' task.id %}" method="get">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Are you sure want to
+                                                        delete this task?</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Task Name: {{ task.title }}</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">No</button>
+                                                    <button type="submit" class="btn btn-primary">Yes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span>
+                                    <h6>{{task.created|date}}</h6>
+                                </span></td>
+
                         </tr>
                         {% endfor %}
                     </tbody>

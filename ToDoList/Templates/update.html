@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}
 Update Task Here
@@ -13,7 +14,7 @@ Update Task
 {% block body %}
 <form  method="POST" class="py-3">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
   <button type="submit" class="btn btn-warning">Submit</button>
 </form>
 <a href="{% url 'home' %}"> <button type="submit" class="btn btn-primary">Back To Home</button></a>
