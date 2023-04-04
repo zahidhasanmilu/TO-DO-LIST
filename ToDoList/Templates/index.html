@@ -6,31 +6,58 @@
 {% block body %}
 
 <div class="contaner">
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th>ID</th>
-            <th>Task</th>
-            <th>Update</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for task in tasks %} 
-        <tr>
-            <td scope="row">{{forloop.counter}}</td>
-            {% if task.complete == True %}
-            <td><strike>{{task.title}}</strike></td>
-            {% else %}
-            <td><span>{{task.title}}</span></td>
-            {% endif %}
-            
-            <td><a href="{% url 'updateTask' task.id %}"><button type="button" class="btn btn-warning">Update</button></a></td>
-            <td><a href="{% url 'deleteTask' task.id %}"><button type="button" class="btn btn-danger">Delete</button></a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    <div class="row">
+        <div class="col-md-4 ">
+            <div class="card card-body h-100">
+                <h3>Create You'r Task Here</h3>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{form.title}} <br> <br>
+                    <a name="" id="" class="btn btn-primary" href="#" role="button"> Create Task</a>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card card-body h-100">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Task</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in tasks %}
+                        <tr>
+                            <td scope="row">{{forloop.counter}}</td>
+                            {% if task.complete == True %}
+                            <td><strike>
+                                    <h5> {{task.title}}</h5>
+                                </strike></td>
+                            {% else %}
+                            <td><span>
+                                    <h5>{{task.title}}</h5>
+                                </span></td>
+                            {% endif %}
+
+                            <td><a href="{% url 'updateTask' task.id %}"><button type="button"
+                                        class="btn btn-warning">Update</button></a></td>
+                            <td><a href="{% url 'deleteTask' task.id %}"><button type="button"
+                                        class="btn btn-danger">Delete</button></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ########### -->
+
 </div>
 
 {% endblock body %}

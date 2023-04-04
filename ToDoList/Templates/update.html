@@ -1,1 +1,24 @@
 {% extends "base.html" %}
+
+{% block title %}
+Update Task Here
+{% endblock title %}
+
+
+{% block heading %}
+Update Task
+{% endblock heading %}
+
+
+{% block body %}
+<form  method="POST" class="py-3">
+    {% csrf_token %}
+    {{ form.as_p }}
+  <button type="submit" class="btn btn-warning">Submit</button>
+</form>
+<a href="{% url 'home' %}"> <button type="submit" class="btn btn-primary">Back To Home</button></a>
+
+
+
+
+{% endblock body %}
