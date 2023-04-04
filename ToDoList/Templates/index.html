@@ -1,9 +1,36 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %} TASK-HOMEPAGE {% endblock title %}
 
+{% block heading %} All Tasks {% endblock heading %}
 
-
-{% block title %} TASK-HOMEPAGE {% endblock title %}
 
 {% block body %}
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-{% endblock body %} 
+
+<div class="contaner">
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Task</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %} 
+        <tr>
+            <td scope="row">{{forloop.counter}}</td>
+            {% if task.complete == True %}
+            <td><strike>{{task.title}}</strike></td>
+            {% else %}
+            <td><span>{{task.title}}</span></td>
+            {% endif %}
+            
+            <td><a href="{% url 'updateTask' task.id %}"><button type="button" class="btn btn-warning">Update</button></a></td>
+            <td><a href="{% url 'deleteTask' task.id %}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+{% endblock body %}
