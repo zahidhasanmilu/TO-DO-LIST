@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block title %} TASK-HOMEPAGE {% endblock title %}
 
-{% block heading %} <a href="{% url 'home' %}"> All Tasks </a>{% endblock heading %}
+{% block heading %} <a href="{% url 'home' %}" style="text-decoration: none;"> All Tasks </a>{% endblock heading %}
 
 
 {% block body %}
@@ -50,6 +50,7 @@
                             <th>Update</th>
                             <th>Delete</th>
                             <th>Created At</th>
+                            <th>Updated At</th>
                          
                         </tr>
                     </thead>
@@ -104,7 +105,12 @@
                                 </div>
                             </td>
                             <td><span>
-                                    <h6>{{task.created|date}}</h6>
+                                    <h6>{{task.created}}</h6>
+                                    <!-- <h6>{{task.created|date}}</h6> -->
+                                </span></td>
+                             <td><span>
+                                    <h6>{{task.update_at}}</h6>
+                                    <!-- <h6>{{task.created|date}}</h6> -->
                                 </span></td>
 
                         </tr>
