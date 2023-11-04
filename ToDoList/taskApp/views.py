@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Task
-from .forms import TaskForm,CreateTaskForm
+from .forms import TaskForm, CreateTaskForm
 from django.contrib import messages
 
 # Create your views here.
@@ -31,9 +31,6 @@ def update(request, id):
             form.save()
             messages.success(request, "Your Task Has Been Updated")
             return redirect('home')
-        else:
-            messages.error(request, "Please INPUT DATA")
-            return redirect('update')
     else:
         form = TaskForm(instance=task)
     context = {
